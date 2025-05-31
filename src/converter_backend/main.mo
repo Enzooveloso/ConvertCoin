@@ -103,6 +103,13 @@ actor CryptoConverter {
       };
     };
   };
-  
 
+  public func getPriceHistory(code : Text) : async [PriceRecord] {
+    for (coin in Buffer.toArray(coins).vals()) {
+      if (coin.code == code) {
+        return coin.prices;
+      };
+    };
+    return []; 
+  };
 };
