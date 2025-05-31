@@ -66,5 +66,43 @@ actor CryptoConverter {
     coins.filterEntries(locateCoin);
   };
 
+  public func convertCoin(codFrom : Text, codTo : Text, amount : Float) : async Float {
+
+    func lastPrice(prices : [PriceRecord]) : Float {
+      if (prices.size() == 0) {
+        return 0.0;
+      };
+      return prices[prices.size() - 1].valueUSD;
+    };
+
+    let coinsArray = Buffer.toArray(coins);
+    var fromCoin : ?Coin = null;
+    var toCoin : ?Coin = null;
+
+    for (coin in coinsArray.vals()) {
+      if (coin.code == codFrom) {
+        fromCoin := ?coin;
+      } else if (coin.code == codTo) {
+        toCoin := ?coin;
+      };
+    };
+
+    switch (fromCoin, toCoin) {
+      case (?f, ?t) {
+        switch (lastPrice(f.prices), lastPrice(t.prices)) {
+          case (fromPrice, toPrice) {
+            return (amount * fromPrice) / toPrice;
+          };
+          case _ {
+            return 0.0;
+          };
+        };
+      };
+      case _ {
+        return 0.0;
+      };
+    };
+  };
+  
 
 };
