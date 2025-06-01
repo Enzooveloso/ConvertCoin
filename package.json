@@ -14,5 +14,9 @@
   "type": "module",
   "workspaces": [
     "src/converter_frontend"
-  ]
+  ],
+  "dependencies": {
+    "chart.js": "^4.4.9",
+    "react-chartjs-2": "^5.3.0"
+  }
 }
