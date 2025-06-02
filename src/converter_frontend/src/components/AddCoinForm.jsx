@@ -14,7 +14,7 @@ const AddCoinForm = ({ onCoinAdded }) => {
     }
 
     try {
-      await crypto_converter_backend.addCoin(code.toUpperCase(), name, parseFloat(value));
+      await converter_backend.addCoin(code.toUpperCase(), name, parseFloat(value));
       setStatus("Moeda adicionada com sucesso!");
       onCoinAdded();
       setCode("");
