@@ -21,8 +21,8 @@ const AddCoinForm = ({ onCoinAdded }) => {
       setName("");
       setValue("");
     } catch (error) {
-      console.error(error);
-      setStatus("Erro ao adicionar moeda.");
+      console.error("Erro ao adicionar moeda:", error);
+      setStatus("Erro: " + (error.message ?? JSON.stringify(error)));
     }
   };
 
@@ -31,7 +31,7 @@ const AddCoinForm = ({ onCoinAdded }) => {
       <h2 className="text-xl font-bold text-[#1f2d3d] mb-4">Adicionar Moeda</h2>
       <input
         type="text"
-        placeholder="Código (ex: BTC)"
+        placeholder="Código (ex: ICP)"
         value={code}
         onChange={(e) => setCode(e.target.value)}
         className="w-full mb-3 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4a7bb7]"

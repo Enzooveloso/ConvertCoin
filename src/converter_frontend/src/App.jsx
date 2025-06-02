@@ -3,11 +3,13 @@ import CoinList from "./components/CoinList";
 import ConvertCoin from "./components/ConvertCoin";
 import AddCoinForm from "./components/AddCoinForm";
 import EditCoinForm from "./components/EditCoinForm";
+import DeleteCoinForm from "./components/DeleteCoinForm";
 import { converter_backend } from "declarations/converter_backend";
 
 export default function App() {
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [coins, setCoins] = useState([]);
 
   const loadCoins = async () => {
@@ -40,6 +42,7 @@ export default function App() {
           onClick={() => {
             setShowAdd(!showAdd);
             setShowEdit(false);
+            setShowDelete(false);
           }}
           className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
         >
@@ -50,22 +53,48 @@ export default function App() {
           onClick={() => {
             setShowEdit(!showEdit);
             setShowAdd(false);
+            setShowDelete(false);
           }}
           className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded"
         >
           {showEdit ? "Fechar Edição" : "Editar Valor de Moeda"}
         </button>
+
+        <button
+          onClick={() => {
+            setShowDelete(!showDelete);
+            setShowAdd(false);
+            setShowEdit(false);
+          }}
+          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+        >
+          {showDelete ? "Fechar Exclusão" : "Excluir Moeda"}
+        </button>
       </div>
 
       {showAdd && (
         <div className="mt-6 bg-white text-gray-900 rounded-lg shadow-md p-4">
-          <AddCoinForm onFinish={() => setShowAdd(false)} />
+          <AddCoinForm onFinish={() => {
+            setShowAdd(false)
+            loadCoins();
+          }} />
         </div>
       )}
 
       {showEdit && (
         <div className="mt-6 bg-white text-gray-900 rounded-lg shadow-md p-4">
-          <EditCoinForm onFinish={() => setShowEdit(false)} />
+          <EditCoinForm onFinish={() => {
+            setShowEdit(false)
+            loadCoins();
+          }} />
+        </div>
+      )}
+      {showDelete && (
+        <div className="mt-6 bg-white text-gray-900 rounded-lg shadow-md p-4">
+          <DeleteCoinForm onFinish={() => {
+            setShowDelete(false);
+            loadCoins();
+          }} />
         </div>
       )}
     </div>
